@@ -43,19 +43,6 @@ export const HomeScreen: React.FC = () => {
     <View style={styles.root}>
       <Header username="Usuário de Teste" />
 
-<<<<<<< HEAD
-        <ReservationCard
-          name="Reserva 1"
-          unavailableDates={['04/09/2025', '05/09/2025']}
-          imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis, et "
-        /><ReservationCard
-          name="Reserva 2"
-          unavailableDates={['04/09/2025', '05/09/2025']}
-          imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis, et "
-        />
-=======
       {/* Carrossel horizontal */}
       <FlatList
         data={menuOptions}
@@ -96,7 +83,6 @@ export const HomeScreen: React.FC = () => {
         {selectedMenu === 'Regras' && (
           <Text style={styles.placeholder}>Regras do condomínio</Text>
         )}
->>>>>>> eee5a20 (feat: implementado menu scrollável)
       </ScrollView>
     </View>
   );
