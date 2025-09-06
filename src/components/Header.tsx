@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 interface HeaderProps {
   username: string;
+  navigation: any;
 }
 
-export const Header: React.FC<HeaderProps> = ({ username: username }) => {
+export const Header: React.FC<HeaderProps> = ({ username: username, navigation }) => {
   return (
     <View style={styles.container}>
         <Text style={styles.greet}>{`Olá, ${username}`}</Text>
         <Image source={require('../../assets/imgs/Icon.png')} style={styles.iconBell} />
-        <Text style={styles.profileRedirect}>{`Ver meu perfil >`}</Text>
+        <TouchableOpacity onPress={() => { navigation.navigate('Profile')}}>
+          <Text style={styles.profileRedirect}>{`Ver meu perfil >`}</Text>
+        </TouchableOpacity>
     </View>
   );
 };

@@ -4,12 +4,18 @@ import { Header } from '../components/Header';
 import { Card } from '../components/Card';
 import { ReservationCard } from '../components/ReservationCard';
 //import { ReservationCard } from '../components/ReservationCard';
-export const HomeScreen: React.FC = () => {
+
+interface Props 
+{
+  navigation: any;
+}
+
+export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [counter, setCounter] = useState(0);
 
   return (
     <View style={styles.root}>
-      <Header username="Usuário de Teste" />
+      <Header username="Usuário de Teste" navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
 
         <ReservationCard
