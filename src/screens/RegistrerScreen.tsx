@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import LoginScreen from './src/screens/LoginScreen'; // precisa existir
-
 import {
   View,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
@@ -14,8 +12,13 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function RegisterScreen({ navigation }) {
+interface Props {
+  navigation: any;
+}
+
+export default function RegisterScreen({ navigation }: Props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,16 +28,11 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos');
       return;
     }
-
     Alert.alert('Sucesso', `Usuário ${username} registrado!`);
-
-    // Limpa os campos
     setUsername('');
     setEmail('');
     setPassword('');
-
-    // Redireciona para a tela de Login
-    navigation.navigate('Login'); // aqui você precisa ter uma tela 'Login' no Stack
+    navigation.navigate('Login');
   };
 
   return (
@@ -47,32 +45,51 @@ export default function RegisterScreen({ navigation }) {
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.title}>Registrar</Text>
+          <Text style={styles.title}>Bem-vindo ao CondoApp</Text>
+          <Text style={styles.subtitle}>Registre-se para acessar</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Nome de usuário"
-            value={username}
-            onChangeText={setUsername}
-          />
+          <View style={styles.inputContainer}>
+            <Icon name="account" size={20} color="#888" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Nome de usuário"
+              value={username}
+              onChangeText={setUsername}
+            />
+          </View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
+          <View style={styles.inputContainer}>
+            <Icon name="email" size={20} color="#888" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+          </View>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={true}
-          />
+          <View style={styles.inputContainer}>
+            <Icon name="lock" size={20} color="#888" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
 
-          <Button title="Registrar" onPress={handleRegister} />
+          <TouchableOpacity style={styles.button} onPress={handleRegister}>
+            <Text style={styles.buttonText}>Registrar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Login')}
+            style={styles.loginLink}
+          >
+            <Text style={styles.loginText}>Já tem conta? Login</Text>
+          </TouchableOpacity>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -80,15 +97,63 @@ export default function RegisterScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, justifyContent: 'center', padding: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, alignSelf: 'center' },
-  input: {
-    height: 50,
-    borderColor: '#aaa',
-    borderWidth: 1,
-    borderRadius: 8,
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#f9f9f9',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    alignSelf: 'center',
+    color: '#2c3e50',
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 20,
+    alignSelf: 'center',
+    color: '#7f8c8d',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 15,
-    paddingHorizontal: 10,
     backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    paddingHorizontal: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  icon: { marginRight: 10 },
+  input: { flex: 1, height: 50 },
+  button: {
+    backgroundColor: '#2980b9',
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  buttonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  loginLink: {
+    marginTop: 15,
+    alignSelf: 'center',
+  },
+  loginText: {
+    color: '#2980b9',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
