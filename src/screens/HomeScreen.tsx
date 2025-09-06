@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Header } from '../components/Header';
 import { Card } from '../components/Card';
 import { ReservationCard } from '../components/ReservationCard';
@@ -30,18 +30,10 @@ export const HomeScreen: React.FC = () => {
   );
 };
 
+export default HomeScreen;
+
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: '#f5f6fa',
-  },
-  scrollContent: {
-    padding: 16,
-  },
-  mt: {
-    marginTop: 8,
-  },
-  bullet: {
-    marginTop: 4,
-  }
+  root: { flex: 1, backgroundColor: '#f5f6fa' },
+  scrollContent: { padding: 16 },
+  mt: { marginTop: 8 },
 });
