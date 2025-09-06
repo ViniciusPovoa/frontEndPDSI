@@ -17,6 +17,11 @@ export const HomeScreen: React.FC = () => {
           unavailableDates={['04/09/2025', '05/09/2025']}
           imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis, et "
+        /><ReservationCard
+          name="Reserva 2"
+          unavailableDates={['04/09/2025', '05/09/2025']}
+          imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis, et "
         />
       </ScrollView>
     </View>

@@ -91,6 +91,8 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({ name, unavaila
                 return { ...initialMarkedDates, ...selectedDates };
         }, [initialMarkedDates, selectedDates]);
 
+        const today = new Date().toISOString().split('T')[0];
+
         return (
                 <Card title={name}>
                         <View style={styles.container}>
@@ -110,6 +112,7 @@ export const ReservationCard: React.FC<ReservationCardProps> = ({ name, unavaila
                                         markingType={'custom'}
                                         markedDates={markedDates}
                                         onDayPress={handleDayPress}
+                                        minDate={today}
                                         theme={{
                                                 calendarBackground: '#ffffff',
                                                 textSectionTitleColor: '#b6c1cd',
