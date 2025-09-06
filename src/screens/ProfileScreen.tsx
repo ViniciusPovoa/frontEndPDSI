@@ -58,7 +58,7 @@ interface ProfileScreenProps
 const PRIMARY = '#0058A3';
 const FALLBACK_IMG = 'https://tocas-ui.com/5.0/en-us/assets/images/16-9.png';
 
-const ProfileScreen: React.FC<ProfileScreenProps> = () => 
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => 
 {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -151,8 +151,13 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () =>
     }
 
     return (
+       
         <ScrollView style={styles.root} contentContainerStyle={styles.scrollContent}>
-
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Text style={styles.backButtonText}>
+                    {'<'}
+                </Text>
+            </TouchableOpacity>
             <View style={styles.bannerWrapper}>
                 <Image
                     source={{ uri: userData.bannerImg || FALLBACK_IMG }}
@@ -351,5 +356,20 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#777',
         fontStyle: 'italic',
-    }
+    },
+    backButton:
+    {
+        position: 'absolute',
+        top: 16,
+        left: 16,
+        color: PRIMARY,
+        fontWeight: 'bold',
+        zIndex: 10,
+    },
+    backButtonText:
+    {
+        fontSize: 35,
+        color: PRIMARY,
+        fontWeight: '500',
+    },
 });
