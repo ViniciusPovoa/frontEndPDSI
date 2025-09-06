@@ -11,13 +11,6 @@ export const HomeScreen: React.FC = () => {
     <View style={styles.root}>
       <Header username="Usuário de Teste" />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Card title="Welcome">
-          <Text>This is a simple example screen structure.</Text>
-          <Text style={styles.mt}>
-            You can place reusable UI pieces in the components folder and page-level
-            layouts in the screens folder.
-          </Text>
-        </Card>
 
         <ReservationCard
           name="Reserva 1"
