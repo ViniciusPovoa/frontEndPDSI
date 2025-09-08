@@ -14,7 +14,7 @@ LocaleConfig.locales['pt-br'] =
 };
 LocaleConfig.defaultLocale = 'pt-br';
 
-interface ReservationCardProps 
+export interface ReservationCardProps 
 {
         name: string;
         unavailableDates: string[]; // just the date strings in "DD/MM/YYYY" format

@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import { Header } from '../components/Header';
-import { ReservationCard } from '../components/ReservationCard';
+import { ReservationBody} from '../components/ReservationBody';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props 
@@ -49,45 +49,42 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <Header username="Usuário de Teste" navigation={navigation} />
 
       {/* Carrossel horizontal */}
-      <FlatList
-        data={menuOptions}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingLeft: 16, paddingVertical: 10 }}
-        renderItem={renderMenuItem}
-      />
+      <ScrollView>
+        <FlatList
+          data={menuOptions}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ paddingLeft: 16, paddingVertical: 10 }}
+          renderItem={renderMenuItem}
+        />
 
-      {/* Conteúdo dinâmico */}
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {selectedMenu === 'Reservas' && (
-          <ReservationCard
-            name="Reserva 1"
-            unavailableDates={['04/09/2025', '05/09/2025']}
-            imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis..."
-          />
-        )}
+        {/* Conteúdo dinâmico */}
+        <View style={styles.scrollContent}>
+          {selectedMenu === 'Reservas' && (
+            <ReservationBody styleTitle={styles.titleComponent} />
+          )}
 
-        {selectedMenu === 'Câmeras' && (
-          <Text style={styles.placeholder}>Visualização das câmeras</Text>
-        )}
+          {selectedMenu === 'Câmeras' && (
+            <Text style={styles.placeholder}>Visualização das câmeras</Text>
+          )}
 
-        {selectedMenu === 'Avisos' && (
-          <Text style={styles.placeholder}>Aqui vão os avisos do condomínio</Text>
-        )}
+          {selectedMenu === 'Avisos' && (
+            <Text style={styles.placeholder}>Aqui vão os avisos do condomínio</Text>
+          )}
 
-        {selectedMenu === 'Denúncia' && (
-          <Text style={styles.placeholder}>Formulário de denúncia</Text>
-        )}
+          {selectedMenu === 'Denúncia' && (
+            <Text style={styles.placeholder}>Formulário de denúncia</Text>
+          )}
 
-        {selectedMenu === 'Financeiro' && (
-          <Text style={styles.placeholder}>Informações financeiras</Text>
-        )}
+          {selectedMenu === 'Financeiro' && (
+            <Text style={styles.placeholder}>Informações financeiras</Text>
+          )}
 
-        {selectedMenu === 'Regras' && (
-          <Text style={styles.placeholder}>Regras do condomínio</Text>
-        )}
+          {selectedMenu === 'Regras' && (
+            <Text style={styles.placeholder}>Regras do condomínio</Text>
+          )}
+        </View>
       </ScrollView>
     </View>
   );
@@ -123,5 +120,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     textAlign: 'center',
+  },
+  titleComponent: {
+    fontSize: 25,
+    fontWeight: '400',
+    marginBottom: 12,
+    textAlign: 'center',
+    color: '#333',
+
   },
 });
