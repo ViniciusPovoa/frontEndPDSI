@@ -10,6 +10,7 @@ import {
 import { Header } from '../components/Header';
 import { ReservationBody} from '../components/ReservationBody';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { RulesBody } from '../components/RulesBody';
 
 interface Props 
 {
@@ -82,7 +83,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           )}
 
           {selectedMenu === 'Regras' && (
-            <Text style={styles.placeholder}>Regras do condomínio</Text>
+            <RulesBody styleTitle={styles.titleComponent} />
           )}
         </View>
       </ScrollView>
