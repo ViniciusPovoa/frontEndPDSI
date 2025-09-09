@@ -23,17 +23,35 @@ export default function RegisterScreen({ navigation }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    if (!username || !email || !password) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos');
-      return;
+const handleRegister = async () => {
+  if (!username || !email || !password) {
+    Alert.alert('Erro', 'Por favor, preencha todos os campos');
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      Alert.alert("Sucesso", `Usuário ${username} registrado!`);
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      navigation.navigate("Login");
+    } else {
+      Alert.alert("Erro", data.message);
     }
-    Alert.alert('Sucesso', `Usuário ${username} registrado!`);
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    navigation.navigate('Login');
-  };
+  } catch (err) {
+    Alert.alert("Erro", "Não foi possível conectar ao servidor");
+  }
+};
+
 
   return (
     <KeyboardAvoidingView

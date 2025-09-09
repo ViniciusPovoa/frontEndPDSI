@@ -22,14 +22,48 @@ export default function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      Alert.alert('Erro', 'Preencha todos os campos');
+  const handleLogin = async () => {
+  console.log("Tentando login com:", { email, password });
+
+  if (!email || !password) {
+    console.log("Campos vazios");
+    Alert.alert("Erro", "Preencha todos os campos");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    console.log("Resposta recebida:", res);
+
+    let data;
+    try {
+      data = await res.json();
+      console.log("Body da resposta:", data);
+    } catch (jsonErr) {
+      console.log("Erro ao parsear JSON:", jsonErr);
+      Alert.alert("Erro", "Resposta inválida do servidor");
       return;
     }
-    Alert.alert('Sucesso', `Logado com: ${email}`);
-    navigation.navigate('Home');
-  };
+
+    if (res.ok) {
+      console.log("Login OK");
+      Alert.alert("Sucesso", `Bem-vindo ${data.email}`);
+      navigation.navigate("Home");
+    } else {
+      console.log("Erro da API:", data);
+      Alert.alert("Erro", data.message || "Erro ao fazer login");
+    }
+  } catch (err) {
+    console.log("Erro no fetch:", err);
+    Alert.alert("Erro", "Não foi possível conectar ao servidor");
+  }
+};
+
 
   return (
     <KeyboardAvoidingView

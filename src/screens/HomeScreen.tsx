@@ -3,40 +3,49 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
-import { Header } from '../components/Header';
-import { ReservationCard } from '../components/ReservationCard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Header } from '../components/Header';
 
-interface Props 
-{
+interface Props {
   navigation: any;
 }
-const menuOptions = [
-  { id: 1, label: 'Reservas', icon: 'calendar' },
-  { id: 2, label: 'Câmeras', icon: 'video' },
-  { id: 3, label: 'Avisos', icon: 'bell' },
-  { id: 4, label: 'Denúncia', icon: 'alert-circle' },
-  { id: 5, label: 'Financeiro', icon: 'currency-usd' },
-  { id: 6, label: 'Regras', icon: 'book' },
+
+interface MenuOption {
+  id: number;
+  label: string;
+  icon: string;
+  screen?: string;
+}
+
+const menuOptions: MenuOption[] = [
+  { id: 1, label: 'Reservas', icon: 'calendar', screen: 'Reservas' },
+  { id: 2, label: 'Câmeras', icon: 'video' }, // Placeholder
+  { id: 3, label: 'Avisos', icon: 'bell' },   // Placeholder
+  { id: 4, label: 'Denúncia', icon: 'alert-circle', screen: 'Denuncias' },
+  { id: 5, label: 'Financeiro', icon: 'currency-usd', screen: 'Financeiro' },
+  { id: 6, label: 'Regras', icon: 'book' },  // Placeholder
 ];
 
-
 const cardWidth = 90;
-export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
+export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [selectedMenu, setSelectedMenu] = useState(menuOptions[0].label);
 
-  const renderMenuItem = ({ item }: any) => {
+  const renderMenuItem = ({ item }: { item: MenuOption }) => {
     const isSelected = item.label === selectedMenu;
 
     return (
       <TouchableOpacity
         style={[styles.menuCard, isSelected && styles.menuCardSelected]}
-        onPress={() => setSelectedMenu(item.label)}
+        onPress={() => {
+          setSelectedMenu(item.label);
+          if (item.screen) {
+            navigation.navigate(item.screen);
+          }
+        }}
       >
         <Icon name={item.icon} size={28} color="#fff" />
         <Text style={styles.menuLabel}>{item.label}</Text>
@@ -44,11 +53,19 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
+  const renderPlaceholder = () => (
+    <View style={styles.placeholderContainer}>
+      <Text style={styles.placeholderText}>
+        {selectedMenu} ainda não implementado
+      </Text>
+    </View>
+  );
+
   return (
-     <View style={styles.root}>
+    <View style={styles.root}>
       <Header username="Usuário de Teste" navigation={navigation} />
 
-      {/* Carrossel horizontal */}
+      {/* Menu horizontal */}
       <FlatList
         data={menuOptions}
         horizontal
@@ -59,36 +76,15 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
       />
 
       {/* Conteúdo dinâmico */}
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {selectedMenu === 'Reservas' && (
-          <ReservationCard
-            name="Reserva 1"
-            unavailableDates={['04/09/2025', '05/09/2025']}
-            imgURL="https://tocas-ui.com/5.0/en-us/assets/images/16-9.png"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend augue sed justo mattis..."
-          />
+      <View style={styles.content}>
+        {!['Câmeras', 'Avisos', 'Regras'].includes(selectedMenu) ? (
+          <Text style={styles.placeholderText}>
+            Selecione o menu para navegar para a tela correspondente
+          </Text>
+        ) : (
+          renderPlaceholder()
         )}
-
-        {selectedMenu === 'Câmeras' && (
-          <Text style={styles.placeholder}>Visualização das câmeras</Text>
-        )}
-
-        {selectedMenu === 'Avisos' && (
-          <Text style={styles.placeholder}>Aqui vão os avisos do condomínio</Text>
-        )}
-
-        {selectedMenu === 'Denúncia' && (
-          <Text style={styles.placeholder}>Formulário de denúncia</Text>
-        )}
-
-        {selectedMenu === 'Financeiro' && (
-          <Text style={styles.placeholder}>Informações financeiras</Text>
-        )}
-
-        {selectedMenu === 'Regras' && (
-          <Text style={styles.placeholder}>Regras do condomínio</Text>
-        )}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -106,22 +102,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  menuCardSelected: {
-    backgroundColor: '#2e59d9',
-  },
-  menuLabel: {
-    color: '#fff',
-    marginTop: 6,
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  scrollContent: { padding: 16 },
-  placeholder: {
-    fontSize: 16,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
+  menuCardSelected: { backgroundColor: '#2e59d9' },
+  menuLabel: { color: '#fff', marginTop: 6, fontSize: 12, textAlign: 'center' },
+  content: { flex: 1, padding: 16, justifyContent: 'center', alignItems: 'center' },
+  placeholderContainer: { padding: 16, backgroundColor: '#fff', borderRadius: 8 },
+  placeholderText: { textAlign: 'center', fontSize: 16 },
 });
