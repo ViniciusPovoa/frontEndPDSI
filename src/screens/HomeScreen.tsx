@@ -11,6 +11,7 @@ import { Header } from '../components/Header';
 import { ReservationBody} from '../components/ReservationBody';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { RulesBody } from '../components/RulesBody';
+import { FinanceBody } from '../components/FinanceBody';
 
 interface Props 
 {
@@ -79,7 +80,7 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
           )}
 
           {selectedMenu === 'Financeiro' && (
-            <Text style={styles.placeholder}>Informações financeiras</Text>
+            <FinanceBody styleTitle={styles.titleComponent} />
           )}
 
           {selectedMenu === 'Regras' && (
